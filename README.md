@@ -11,8 +11,26 @@ app choices.
 
 ## Install
 
-On a **fresh, vanilla Arch install** (you provide the base system, disk layout,
-encryption and bootloader — see notes below), run:
+### From scratch (replaces archinstall)
+
+Boot the official Arch ISO (UEFI), connect to the internet (e.g. `iwctl`), then:
+
+```bash
+pacman -Sy --noconfirm git
+git clone https://github.com/alex-miraxis/dot-files.git
+cd dot-files
+./arch-install.sh
+```
+
+`arch-install.sh` LUKS-encrypts and partitions the disk you choose (ext4 root +
+1 GiB EFI), installs a minimal base (systemd-boot, zram swap, iwd +
+systemd-networkd + resolved), creates your user, and copies this repo in. It
+carries your ISO Wi-Fi credentials forward. Reboot, unlock the disk, and log in
+on the console — the **Hyprland desktop layer installs itself** on first login
+(AUR steps pause for review), then reboots into the Pixie greeter. Two reboots
+total.
+
+### Desktop layer only (already running vanilla Arch)
 
 ```bash
 bash <(curl -fsSL https://raw.githubusercontent.com/alex-miraxis/dot-files/main/boot.sh)
@@ -26,6 +44,7 @@ is safe (idempotent).
 > vector, the installer enables **PKGBUILD review** for every AUR build. Read
 > [SECURITY.md](SECURITY.md) before installing, and actually look at the diffs
 > when prompted. (`ARCHY_AUR_TRUST=1` skips review for unattended runs.)
+
 
 ## What's in it
 
