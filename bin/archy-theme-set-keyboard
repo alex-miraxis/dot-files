@@ -1,0 +1,7 @@
+#!/bin/bash
+
+# archy:summary=Apply the current theme keyboard color to supported keyboards
+# archy:hidden=true
+
+archy-theme-set-keyboard-asus-rog
+archy-theme-set-keyboard-f16

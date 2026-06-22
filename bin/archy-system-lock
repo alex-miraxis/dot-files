@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# archy:summary=Lock the computer and turn off the display
+# archy:group=system
+# archy:name=lock
+# archy:examples=archy system lock
+
+if ! pidof hyprlock >/dev/null; then
+  (
+    hyprlock
+    archy-system-wake
+  ) &
+fi
+
+# Set keyboard layout to default (first layout)
+hyprctl switchxkblayout all 0 > /dev/null 2>&1
+
+# Ensure 1password is locked
+if pgrep -x "1password" >/dev/null; then
+  1password --lock &
+fi
+
+# Avoid running screensaver when locked
+pkill -f org.archy.screensaver
+
+if [[ ${ARCHY_LOCK_ONLY:-false} != "true" ]]; then
+  (
+    sleep 3
+    pidof hyprlock >/dev/null || exit 0
+    archy-brightness-keyboard off
+    archy-brightness-display off
+  ) &
+fi

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# archy:summary=Set or toggle shape of Hyprland window corners
+# archy:args=[toggle|sharp|round]
+# archy:examples=archy style corners hyprland toggle | archy style corners hyprland round | archy style corners hyprland sharp
+
+case "${1:-toggle}" in
+  round) set -- on ;;
+  sharp) set -- off ;;
+  toggle) ;;
+  *)
+    echo "Usage: archy-style-corners-hyprland [toggle|sharp|round]"
+    exit 1
+    ;;
+esac
+
+archy-hyprland-toggle rounded-corners "$1"

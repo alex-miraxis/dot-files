@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# archy:summary=Edit, set, or reset screensaver branding
+# archy:group=branding
+# archy:name=screensaver
+# archy:args=<image|text|reset>
+# archy:examples=archy branding screensaver image | archy branding screensaver text | archy branding screensaver reset
+
+set -euo pipefail
+
+SOURCE_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}"
+
+case "${1:-}" in
+image)
+  image=$(archy-menu-file "Pick png/svg from $SOURCE_DIR" "${SOURCE_DIR}" "svg png")
+  if [[ -n $image ]] && archy-transcode-ascii "$image" ~/.config/archy/branding/screensaver.txt; then
+    archy-launch-screensaver force >/dev/null 2>&1
+  fi
+  ;;
+text)
+  archy-launch-editor ~/.config/archy/branding/screensaver.txt >/dev/null 2>&1 && archy-launch-screensaver force >/dev/null 2>&1
+  ;;
+reset)
+  cp "$ARCHY_PATH/logo.txt" ~/.config/archy/branding/screensaver.txt && archy-launch-screensaver force >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: archy-branding-screensaver <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

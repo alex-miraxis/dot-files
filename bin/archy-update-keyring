@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# archy:summary=Refresh the Arch Linux keyring
+
+sudo pacman -Sy --noconfirm --needed archlinux-keyring

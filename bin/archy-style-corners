@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# archy:summary=Set Hyprland, Hyprlock, Mako, and Walker corners to sharp or round
+# archy:args=<sharp|round>
+# archy:examples=archy style corners round | archy style corners sharp
+
+if [[ $1 != "sharp" && $1 != "round" ]]; then
+  echo "Usage: archy-style-corners <sharp|round>"
+  exit 1
+fi
+
+archy-style-corners-hyprland "$1"
+archy-style-corners-hyprlock "$1"
+archy-style-corners-mako "$1"
+archy-style-corners-walker "$1"
+
+case $1 in
+  sharp) archy-notification-send "Sharp corners enabled" -g 󰝣 ;;
+  round) archy-notification-send "Round corners enabled" -g 󰘇 ;;
+esac

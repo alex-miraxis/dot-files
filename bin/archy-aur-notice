@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# archy:summary=Print a security notice before installing AUR packages
+
+cat <<'EOF'
+
+────────────────────────────────────────────────────────────────────────────
+  Installing packages from the AUR (Arch User Repository)
+────────────────────────────────────────────────────────────────────────────
+  The AUR is user-submitted and is NOT signed or vetted like the official
+  Arch repos. It has been the vector for real malware (CHAOS RAT, Jul 2025;
+  Spark RAT, Aug 2025; the "Atomic Arch" mass-hijack of 1,500+ ORPHANED
+  packages, Jun 2026).
+
+  To stay safe, this installer:
+    • routes everything available in the signed repos through pacman, not AUR
+    • installs the AUR packages below with PKGBUILD review ENABLED, so you can
+      inspect each PKGBUILD/.install and source diff before anything is built
+    • only ships actively-maintained packages that pull from their genuine,
+      official upstream (none were in the Atomic Arch blast radius)
+
+  When yay shows the diff/edit menus: actually look. Reject anything with an
+  unexpected source URL or a build/install step that runs curl|sh, npm/pip/bun,
+  or base64-decoded blobs. (Set ARCHY_AUR_TRUST=1 to skip review on trusted,
+  automated runs.)
+────────────────────────────────────────────────────────────────────────────
+
+EOF
+sleep 2

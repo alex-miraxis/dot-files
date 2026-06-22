@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# archy:summary=No-op now that archy-update-perform is responsible for idle management.
+# archy:hidden=true

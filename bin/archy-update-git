@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# archy:summary=Pull the latest Arch git changes
+
+set -e
+
+echo -e "\e[32mUpdate Arch\e[0m"
+
+archy-update-time
+
+# Suppress Hyprland config errors while git updates default config files mid-pull
+hyprctl keyword debug:suppress_errors true &>/dev/null || true
+hyprctl eval 'hl.config({ debug = { suppress_errors = true } })' &>/dev/null || true
+
+git -C $ARCHY_PATH pull --autostash
+git -C $ARCHY_PATH --no-pager diff --check || git -C $ARCHY_PATH reset --merge
+
+hyprctl reload &>/dev/null || true

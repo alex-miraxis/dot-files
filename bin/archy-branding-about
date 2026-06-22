@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# archy:summary=Edit, set, or reset About branding
+# archy:group=branding
+# archy:name=about
+# archy:args=<image|text|reset>
+# archy:examples=archy branding about image | archy branding about text | archy branding about reset
+
+set -euo pipefail
+
+SOURCE_DIR="${XDG_PICTURES_DIR:-$HOME/Pictures}"
+
+case "${1:-}" in
+image)
+  image=$(archy-menu-file "Pick png/svg from $SOURCE_DIR" "${SOURCE_DIR}" "svg png")
+  if [[ -n $image ]] && archy-transcode-ascii "$image" ~/.config/archy/branding/about.txt --width 54 --height 26; then
+    archy-launch-about >/dev/null 2>&1
+  fi
+  ;;
+text)
+  archy-launch-editor ~/.config/archy/branding/about.txt >/dev/null 2>&1 && archy-launch-about >/dev/null 2>&1
+  ;;
+reset)
+  cp "$ARCHY_PATH/icon.txt" ~/.config/archy/branding/about.txt && archy-launch-about >/dev/null 2>&1
+  ;;
+*)
+  echo "Usage: archy-branding-about <image|text|reset>" >&2
+  exit 1
+  ;;
+esac

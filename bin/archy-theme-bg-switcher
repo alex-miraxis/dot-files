@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# archy:summary=Open the Arch background switcher
+# archy:group=theme
+# archy:name=bg-switcher
+# archy:aliases=archy background
+
+ARCHY_PATH=${ARCHY_PATH:-$HOME/.local/share/archy}
+theme_name=$(cat "$HOME/.config/archy/current/theme.name" 2>/dev/null)
+current_background=$(readlink -f "$HOME/.config/archy/current/background" 2>/dev/null)
+
+archy-menu-images \
+  --selected "$current_background" \
+  "$HOME/.config/archy/current/theme/backgrounds" \
+  "$HOME/.config/archy/backgrounds/$theme_name"

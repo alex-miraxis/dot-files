@@ -1,0 +1,5 @@
+#!/bin/bash
+
+# archy:summary=Show the current weather notification
+
+archy-notification-send -g $(archy-weather-icon) -u low "$(archy-weather-status)"
