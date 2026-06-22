@@ -193,7 +193,7 @@ Name=wl*
 [Network]
 DHCP=yes
 NET
-ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+# (resolv.conf symlink is created outside the chroot — see just after CHROOT)
 systemctl enable iwd.service systemd-networkd.service systemd-resolved.service
 
 # bootloader: systemd-boot (+ keep its EFI binary updated on systemd upgrades)
@@ -212,6 +212,13 @@ initrd  /initramfs-linux.img
 options cryptdevice=UUID=$LUKS_UUID:cryptroot root=/dev/mapper/cryptroot rw
 ENTRY
 CHROOT
+
+# Point the installed system's resolv.conf at systemd-resolved's stub.
+# Done out here on the real on-disk file: inside the chroot the live ISO's
+# /etc/resolv.conf already resolves to that stub, so `ln -sf` aborts with
+# "are the same file".
+rm -f /mnt/etc/resolv.conf
+ln -s /run/systemd/resolve/stub-resolv.conf /mnt/etc/resolv.conf
 
 # ---- 8. done -------------------------------------------------------------
 cleanup
