@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# archy:summary=Install AUR packages (PKGBUILD review when interactive; auto-skips when there's no TTY)
+# archy:summary=Install AUR packages (PKGBUILD review when interactive; non-interactive without a TTY)
 # archy:args=<packages...>
 
 if archy-pkg-missing "$@"; then
   if [[ -n ${ARCHY_AUR_TRUST:-} || ! -t 0 ]]; then
-    # Explicitly trusted, OR no TTY to review on (e.g. the logged installer,
-    # which runs every step with stdin from /dev/null). The AUR list is
-    # pre-vetted — see SECURITY.md — so build without interactive prompts.
-    yay -S --needed --noconfirm "$@" || exit 1
+    # Trusted, or no TTY to review on (e.g. the logged installer, which runs
+    # every step with stdin from /dev/null). Build the pre-vetted list fully
+    # non-interactively: --noconfirm plus explicit menu answers so yay can never
+    # stop on its clean/diff/edit prompts. See SECURITY.md.
+    yay -S --needed --noconfirm \
+      --answerclean=None --answerdiff=None --answeredit=None --removemake "$@" || exit 1
   else
     # Interactive: review each PKGBUILD/.install + upstream diff before building.
     yay -S --needed "$@" || exit 1
