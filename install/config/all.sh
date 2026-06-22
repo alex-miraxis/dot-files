@@ -34,6 +34,7 @@ run_logged $ARCHY_INSTALL/config/plocate-ac-only.sh
 run_logged $ARCHY_INSTALL/config/hardware/network.sh
 run_logged $ARCHY_INSTALL/config/hardware/set-wireless-regdom.sh
 run_logged $ARCHY_INSTALL/config/hardware/fix-fkeys.sh
+run_logged $ARCHY_INSTALL/config/hardware/mac-keyboard.sh
 run_logged $ARCHY_INSTALL/config/hardware/bluetooth.sh
 run_logged $ARCHY_INSTALL/config/hardware/printer.sh
 run_logged $ARCHY_INSTALL/config/hardware/usb-autosuspend.sh
