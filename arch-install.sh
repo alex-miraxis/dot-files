@@ -28,7 +28,7 @@ cleanup() {
   mountpoint -q /mnt && umount -R /mnt
   [[ -e /dev/mapper/cryptroot ]] && cryptsetup close cryptroot
 }
-trap 'echo; warn "Aborted/failed (line $LINENO). Cleaning up mounts..."; cleanup' ERR
+trap 'echo; warn "Aborted/failed (line $LINENO). Cleaning up..."; cleanup; exit 1' ERR
 
 # ---- 0. preflight --------------------------------------------------------
 [[ $EUID -eq 0 ]] || die "Run as root from the Arch live ISO."
@@ -105,8 +105,9 @@ mount --mkdir "$ESP" /mnt/boot
 
 # ---- 5. base system ------------------------------------------------------
 say "Refreshing mirrors + installing the base system (this takes a while)..."
-command -v reflector &>/dev/null && \
+if command -v reflector &>/dev/null; then
   reflector --latest 20 --sort rate --protocol https --save /etc/pacman.d/mirrorlist 2>/dev/null || true
+fi
 
 pacstrap -K /mnt base linux linux-firmware base-devel \
   git sudo vim cryptsetup dosfstools iwd zram-generator ${UCODE_PKG}
