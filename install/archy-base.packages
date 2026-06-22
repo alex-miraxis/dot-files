@@ -133,3 +133,20 @@ xdg-desktop-portal-hyprland
 xmlstarlet
 zed
 zoxide
+
+# --- Audio (PipeWire) + desktop essentials that lived in Omarchy's ISO set ---
+pipewire
+pipewire-pulse
+pipewire-alsa
+pipewire-jack
+gst-plugin-pipewire
+libpulse
+sof-firmware
+bluez
+bluez-utils
+qt6-wayland
+gtk4-layer-shell
+webp-pixbuf-loader
+xdg-user-dirs
+linux-headers
+dkms
