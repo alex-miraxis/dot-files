@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# archy:summary=Mount Google Drive as a folder via rclone (FUSE), with a systemd user service
+# archy:examples=archy gdrive setup
+
+set -e
+REMOTE="gdrive"
+MOUNT="$HOME/Google Drive"
+
+command -v rclone &>/dev/null || archy-pkg-add rclone
+
+if ! rclone listremotes 2>/dev/null | grep -q "^${REMOTE}:$"; then
+  echo "Let's authorize Google Drive. In the rclone wizard:"
+  echo "  • n) new remote   • name it exactly: ${REMOTE}   • storage: drive (Google Drive)"
+  echo "  • accept defaults, and authorize in your browser when prompted."
+  read -rp "Press Enter to open rclone config..."
+  rclone config
+fi
+
+mkdir -p "$MOUNT" ~/.config/systemd/user
+cat > ~/.config/systemd/user/gdrive-mount.service <<EOF
+[Unit]
+Description=Google Drive (rclone FUSE mount)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=notify
+ExecStart=/usr/bin/rclone mount ${REMOTE}: %h/Google\\ Drive --vfs-cache-mode full --dir-cache-time 1000h --umask 022
+ExecStop=/bin/sh -c 'fusermount3 -uz "%h/Google Drive" 2>/dev/null || fusermount -uz "%h/Google Drive"'
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
+EOF
+
+systemctl --user daemon-reload
+systemctl --user enable --now gdrive-mount.service
+echo "✓ Google Drive mounted at: $MOUNT"

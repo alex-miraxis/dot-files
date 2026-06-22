@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# archy:summary=Overwrite all the user Hyprland Lua configs in ~/.config/hypr with the Arch defaults.
+
+archy-refresh-config hypr/.luarc.json
+archy-refresh-config hypr/autostart.lua
+archy-refresh-config hypr/bindings.lua
+archy-refresh-config hypr/input.lua
+archy-refresh-config hypr/looknfeel.lua
+archy-refresh-config hypr/hyprland.lua
+archy-refresh-config hypr/monitors.lua
+bash "$ARCHY_PATH/install/config/archy-toggles.sh"
+bash "$ARCHY_PATH/install/config/detect-keyboard-layout.sh"

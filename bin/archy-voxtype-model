@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# archy:summary=Open Voxtype AI model setup
+
+set -e
+
+archy-launch-floating-terminal-with-presentation "voxtype setup model"
+archy-restart-waybar

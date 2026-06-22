@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# archy:summary=Install/refresh the Pixie SDDM theme from defaults
+# archy:requires-sudo=true
+
+sudo mkdir -p /usr/share/sddm/themes
+sudo rm -rf /usr/share/sddm/themes/pixie
+sudo cp -r "$ARCHY_PATH/default/sddm/themes/pixie" /usr/share/sddm/themes/pixie

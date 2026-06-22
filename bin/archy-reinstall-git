@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# archy:summary=Reinstall the stable Arch source directory from git
+
+set -e
+
+# Reinstall the Arch configuration directory from the git source.
+
+git clone --depth=1 --branch main "https://github.com/alex-miraxis/dot-files.git" ~/.local/share/archy-new >/dev/null
+mv $ARCHY_PATH ~/.local/share/archy-old
+mv ~/.local/share/archy-new $ARCHY_PATH

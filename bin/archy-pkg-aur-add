@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# archy:summary=Install packages from the AUR (PKGBUILD review on by default; ARCHY_AUR_TRUST=1 to skip)
+# archy:args=<packages...>
+
+if archy-pkg-missing "$@"; then
+  if [[ -n ${ARCHY_AUR_TRUST:-} ]]; then
+    # Unattended: skip review (less safe — only for trusted/automated runs)
+    yay -S --needed --noconfirm "$@" || exit 1
+  else
+    # Default: review PKGBUILD/.install + upstream diffs before building.
+    # This is the single most important defense against AUR supply-chain attacks.
+    yay -S --needed "$@" || exit 1
+  fi
+fi
+
+for pkg in "$@"; do
+  if ! pacman -Q "$pkg" &>/dev/null; then
+    echo -e "\033[31mError: Package '$pkg' did not install\033[0m" >&2
+    exit 1
+  fi
+done
+
+exit 0

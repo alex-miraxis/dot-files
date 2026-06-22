@@ -1,0 +1,38 @@
+#!/bin/bash
+
+# archy:summary=Set or toggle rounded Mako notification corners
+# archy:args=[toggle|sharp|round]
+# archy:examples=archy style corners mako toggle | archy style corners mako round | archy style corners mako sharp
+
+TOGGLES_CONFIG="$HOME/.local/state/archy/toggles/mako.ini"
+
+set_radius() {
+  local radius="$1"
+
+  mkdir -p "$(dirname "$TOGGLES_CONFIG")"
+  touch "$TOGGLES_CONFIG"
+
+  if grep -q '^border-radius=' "$TOGGLES_CONFIG"; then
+    sed -i "s/^border-radius=.*/border-radius=$radius/" "$TOGGLES_CONFIG"
+  else
+    echo "border-radius=$radius" >>"$TOGGLES_CONFIG"
+  fi
+}
+
+case "${1:-toggle}" in
+  round) set_radius 6 ;;
+  sharp) set_radius 0 ;;
+  toggle)
+    if [[ -f $TOGGLES_CONFIG ]] && grep -q '^border-radius=6$' "$TOGGLES_CONFIG"; then
+      set_radius 0
+    else
+      set_radius 6
+    fi
+    ;;
+  *)
+    echo "Usage: archy-style-corners-mako [toggle|sharp|round]"
+    exit 1
+    ;;
+esac
+
+makoctl reload

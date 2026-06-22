@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# archy:summary=Install Zed Editor and configure it with the current Arch theme
+
+echo "Installing Zed Editor..."
+archy-pkg-add zed omazed
+
+# Apply Arch theme to Zed
+omazed setup
+
+setsid gtk-launch dev.zed.Zed

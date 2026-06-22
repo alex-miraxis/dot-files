@@ -1,0 +1,34 @@
+# Arch AUR packages — NOT signed/vetted like the official repos.
+# These are installed via yay with mandatory PKGBUILD review (see SECURITY.md
+# and `archy-aur-notice`). Every entry below was verified (2026-06) to be an
+# actively-maintained package pulling from its genuine, official upstream:
+#
+#   helium-browser-bin   imputnet/helium-linux releases (PGP-verified)
+#   walker-bin           github.com/abenz1267/walker (upstream author)
+#   elephant-all-bin     github.com/abenz1267/elephant (walker data providers)
+#   slack-desktop        slack.com/downloads
+#   onlyoffice-bin       onlyoffice.com
+#   1password            downloads.1password.com (vendor-maintained, signed)
+#   1password-cli        cache.agilebits.com (1Password's company)
+#   localsend-bin        github.com/localsend/localsend releases
+#   python-terminaltexteffects  PyPI (screensaver engine)
+#   tzupdate             github.com/cdown/tzupdate
+#   ufw-docker           github.com/chaifeng/ufw-docker
+#   xdg-terminal-exec    freedesktop xdg-terminal-exec spec impl
+#   yaru-icon-theme      Ubuntu Yaru icons
+
+1password
+1password-cli
+elephant-all-bin
+claude-desktop-native
+helium-browser-bin
+localsend-bin
+onlyoffice-bin
+otf-space-grotesk
+python-terminaltexteffects
+slack-desktop
+tzupdate
+ufw-docker
+walker-bin
+xdg-terminal-exec
+yaru-icon-theme

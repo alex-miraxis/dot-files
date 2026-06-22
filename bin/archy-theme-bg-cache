@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# archy:summary=Cache background switcher thumbnails for the current theme
+
+theme_name=$(cat "$HOME/.config/archy/current/theme.name" 2>/dev/null)
+
+archy-menu-images \
+  --cache-only \
+  "$HOME/.config/archy/current/theme/backgrounds" \
+  "$HOME/.config/archy/backgrounds/$theme_name"

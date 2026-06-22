@@ -1,0 +1,33 @@
+# Transcoding helpers have moved to archy-transcode.
+
+transcode-video-1080p() {
+  archy-transcode "$1" mp4 1080p
+}
+
+transcode-video-4K() {
+  archy-transcode "$1" mp4 4k
+}
+
+transcode-video-gif() {
+  archy-transcode "$1" gif 1080p
+}
+
+img2jpg() {
+  archy-transcode "$1" jpg high
+}
+
+img2jpg-small() {
+  archy-transcode "$1" jpg low
+}
+
+img2jpg-medium() {
+  archy-transcode "$1" jpg medium
+}
+
+img2jpg-large() {
+  archy-transcode "$1" jpg high
+}
+
+img2png() {
+  archy-transcode "$1" png high
+}
