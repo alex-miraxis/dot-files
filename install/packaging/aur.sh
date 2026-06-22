@@ -1,12 +1,11 @@
-# Install AUR packages. Run interactively, archy-pkg-aur-add reviews each
-# PKGBUILD; in the logged (no-TTY) installer it builds the pre-vetted list
-# non-interactively. See SECURITY.md.
+# Install AUR packages. The logged installer is unattended (run_logged feeds
+# /dev/null to stdin), so build the pre-vetted list non-interactively. Running
+# `archy-pkg-aur-add <pkg>` by hand in a terminal still reviews each PKGBUILD.
 mapfile -t aur_pkgs < <(grep -v '^#' "$ARCHY_INSTALL/archy-aur.packages" | grep -v '^$')
 
 if [[ ${#aur_pkgs[@]} -gt 0 ]]; then
   archy-aur-notice
-  # Keep sudo authenticated through the (potentially long) AUR builds so its
-  # timestamp doesn't expire and re-prompt mid-build.
+  # Keep sudo authenticated through the (long) AUR builds.
   source archy-sudo-keepalive
-  archy-pkg-aur-add "${aur_pkgs[@]}"
+  ARCHY_AUR_TRUST=1 archy-pkg-aur-add "${aur_pkgs[@]}"
 fi
