@@ -195,8 +195,9 @@ NET
 ln -sf /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
 systemctl enable iwd.service systemd-networkd.service systemd-resolved.service
 
-# bootloader: systemd-boot
+# bootloader: systemd-boot (+ keep its EFI binary updated on systemd upgrades)
 bootctl install
+systemctl enable systemd-boot-update.service
 cat > /boot/loader/loader.conf <<LOADER
 default arch.conf
 timeout 3
