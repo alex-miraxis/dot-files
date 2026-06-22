@@ -1,2 +1,2 @@
 # dot-files
-My hyprland set-up
+My hyprland Setup
